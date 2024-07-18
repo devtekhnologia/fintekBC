@@ -180,6 +180,28 @@ const winnerData = async (req, res) => {
 // };
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const getWinnerData = async (req, res) => {
   const { bid_sch_id,bid_bcdate_id } = req.body;
 
@@ -252,7 +274,10 @@ const getWinnerData = async (req, res) => {
       winner_Name: win,
       winnerAmount: winnerAmount,
       total: schTotal,
-      biddingAmount:bid_amount
+      biddingAmount:bid_amount,
+      memId:bid_mem_id,
+      bcdateId:bid_bcdate_id,
+
     }];
 
     return res.status(200).send({
