@@ -3,7 +3,7 @@ const { createPool } = require('mysql2');
 const pool = createPool({
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: 'Tekhnologia@123',
     database: 'fintek'
 });
 
