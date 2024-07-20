@@ -4,7 +4,7 @@ const API_BASE_URL = apiurl;
 
 export const changePassword= async (value) => {
     try {     
-    const response = await axios.post('http://localhost:3002/changepassword', value)
+    const response = await axios.post('http://65.0.85.112:3004/changepassword', value)
      return response.data;
     } catch (error) {
       console.error("Error: ", error);
@@ -15,7 +15,7 @@ export const changePassword= async (value) => {
 
   export const verifyotp= async (value) => {
     try {     
-      const response = await axios.post('http://localhost:3002/verifyotp', value);
+      const response = await axios.post('http://65.0.85.112:3004/verifyotp', value);
      return response.data;
     } catch (error) {
       console.error("Error ", error);

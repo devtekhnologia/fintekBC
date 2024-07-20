@@ -47,7 +47,7 @@ const Upate = () => {
         sch_id: "schemeId",
       });
     } catch (error) {
-      setModalMessage( (error.message || error));
+      setModalMessage((error.message || error));
       setShowModal(true);
     }
   };

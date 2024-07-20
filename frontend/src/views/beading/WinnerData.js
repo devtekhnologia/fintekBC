@@ -4,7 +4,6 @@ import { Button } from "react-bootstrap";
 import { fetchWinner,fetchTotalAmountScheme } from "../store/bSlice";
 import { useNavigate, useParams } from 'react-router-dom';
 
-import {sendWinnerNameMessge,sendWinnerinfo} from '../store/apiService'
 const WinnerData = () => {
     const {schemeId}=useParams();
     const {bcdateId}=useParams()
@@ -12,18 +11,12 @@ const WinnerData = () => {
   const dispatch = useDispatch();
   const { total, winners } = useSelector((state) => state.bSlice);
 
-  console.log("first")
-console.log(winners);
-console.log("fghj")
-
   useEffect(() => {
     dispatch(fetchWinner({ bid_sch_id: schemeId, bid_bcdate_id: bcdateId }));
     dispatch(fetchTotalAmountScheme({ sch_id: schemeId }));
   }, [dispatch, schemeId, bcdateId]);
   
-  const handleOk = async () => {
-    await sendWinnerNameMessge({sch_id:schemeId,name:winners[0].winner_Name,bcid:winners[0].bcdateId,mem_id:winners[0].memId})
-    await sendWinnerinfo({sch_id:schemeId,name:winners[0].winner_Name,bcid:winners[0].bcdateId})
+  const handleOk = () => {
     navigate('/agency')
   };
 
@@ -60,7 +53,7 @@ console.log("fghj")
        </tbody>
      </table>
      <div className="d-flex justify-content-center">
-       <Button onClick={handleOk} >Send Message and Back to Dashboard</Button>
+       <Button onClick={handleOk} >OK</Button>
      </div>
    </div>
  </div>

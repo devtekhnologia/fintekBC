@@ -36,7 +36,7 @@ const EnterOtp = () => {
         otp: value.user_otp,
       }
 
-      // const res = await axios.post('http://localhost:3002/verifyotp', newvalue);
+      // const res = await axios.post('http://65.0.85.112:3004/verifyotp', newvalue);
 
       const res=await verifyotp(newvalue)
 

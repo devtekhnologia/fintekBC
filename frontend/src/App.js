@@ -31,7 +31,6 @@ import Forgotpassword from "./views/pages/login/Forgotpassword";
 import EnterOtp from "./views/pages/login/EnterOtp";
 import ChangePassword from "./views/pages/login/ChangePassword";
 import WinnerData from "./views/beading/WinnerData";
-import Bcdatamessage from "./views/bcDate/Bcdatamessage";
 
 function App() {
   const { isColorModeSet, setColorMode } = useColorModes("coreui-free-react-admin-template-theme");
@@ -86,9 +85,6 @@ function App() {
             <Route path="/agency/update/:schemeId" element={<Upate />} />
             <Route path="/agency/updateDate/:schemeId" element={<BcDate/>} />
             <Route path="/agency/winnerdata/:schemeId/:bcdateId" element={<WinnerData />} />
-            <Route path="/agency/bcdatemessge/:schemeId" element={<Bcdatamessage/>} />
-            {/* <Route path="" element={<SendDate/>} /> */}
-
 
           </Route>
         </Routes>

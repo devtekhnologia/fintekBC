@@ -6,10 +6,9 @@ import { fetchAllMembers } from "../store/memberSlice1";
 import { fetchSchemeName } from "../store/winnersSlice";
 import axios from "axios";
 import { apiurl } from "../../Api/apiurl";
-import { sendPayPayment } from "../store/apiService";
 
 
-const Payment = () => {
+const Receipt = () => {
   const dispatch = useDispatch();
   const members1 = useSelector((state) => state.member?.members1 || []);
   const schemeNames = useSelector((state) => state.winners?.schemeNames || []);
@@ -59,7 +58,7 @@ const Payment = () => {
 
     // Call the API when the scheme name is selected
     try {
-      // const response = await axios.post("http://localhost:3002/drowpdown", {
+      // const response = await axios.post("http://65.0.85.112:3004/drowpdown", {
       //   sch_name: schemeName,
       // });
 
@@ -78,7 +77,7 @@ const Payment = () => {
     try {
       console.log(value);
 
-      // const response1 = await axios.post("http://localhost:3002/getbcdate", {
+      // const response1 = await axios.post("http://65.0.85.112:3004/getbcdate", {
       //   sch_name: value.sch_name,
       //   bc_no: value.bc_no,
       // });
@@ -107,9 +106,6 @@ const Payment = () => {
       };
 
       await dispatch(createPayment(newvalue1)).unwrap();
-
-      const res=await sendPayPayment({schname:value.sch_name,amount:value.amount,memname:value.mem_name,bcno:value.bc_no}) 
-
       setModalMessage("Payment is done");
       setShowModal(true);
       setValue({
@@ -267,4 +263,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default Receipt;

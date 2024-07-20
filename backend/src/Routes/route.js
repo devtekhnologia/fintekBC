@@ -12,6 +12,12 @@ const whatsappController = require("../Controllers/whatsappController.js");
 const bcdateController = require("../Controllers/bcdateController.js");
 const forgotController = require("../Controllers/forgotController.js");
 
+
+
+
+
+
+
 const router = express.Router();
 //scheme Route test
 router.post("/cretaescheme", SchemeController.createScheme);
@@ -147,17 +153,10 @@ router.post("/getbcdate", bcdateController.getreceiptbcdateId);
 router.post("/getbcno", bcdateController.getbc_no);
 
 
+router.post('/send', whatsappController.sendMessage);
+router.post('/send', whatsappController.sendMessage1);
+// router.post('/receive', whatsappController.receivewhatsapp)
 
-
-
-
-
-router.post('/sendwinner', whatsappController.sendWinner);
-router.post('/sendwinnerinfo', whatsappController.sendMessageWinnerInfo)
-router.post('/sendbcdate', whatsappController.sendbcDate);
-router.post('/sendpenddingamount', whatsappController.sendPenddingAmount)
-router.post('/crediteamount', whatsappController.sendcredited)
-router.post('/deabiteamount', whatsappController.senddebiated)
 
 
 

@@ -2,10 +2,42 @@ const { query } = require("../utils/database");
 const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 
+// const createBcDateRecord = async (req, res) => {
+//     try {
+//       const fetchSchemeQuery = "SELECT sch_id, sch_month, sch_starting_date FROM tbl_scheme ORDER BY sch_id DESC LIMIT 1";
+//       const lastSchemeRecord = await query(fetchSchemeQuery);
 
+//       if (lastSchemeRecord.length === 0) {
+//         return res.status(404).send({ status: false, message: "No records found in tbl_scheme" });
+//       }
 
+//       const { sch_id, sch_month, sch_starting_date } = lastSchemeRecord[0];
+//       const bc_no = req.body.bc_no || sch_month;
+//       const bc_status=false
 
+//       if (!bc_no || bc_no <= 0) {
+//         return res.status(400).send({ status: false, message: "Invalid bc_no provided" });
+//       }
 
+//       const insertVoucherQuery = "INSERT INTO tbl_bcdate (bc_date, dc_sch_id, bc_no,bc_status) VALUES (?, ?, ?)";
+//       const startDate = new Date(sch_starting_date);
+
+//       for (let i = 0; i < bc_no; i++) {
+//         const bc_date = new Date(startDate);
+//         bc_date.setMonth(bc_date.getMonth() + i);
+
+//         await query(insertVoucherQuery, [bc_date.toISOString().split('T')[0], sch_id, i + 1]);
+//       }
+
+//       return res.status(200).send({
+//         status: true,
+//         message: `${bc_no} BC date records created successfully`,
+//       });
+//     } catch (err) {
+//       console.error(err);
+//       return res.status(500).send({ status: false, message: err.message });
+//     }
+//   };
 const createBcDateRecord = async (req, res) => {
   try {
     // Fetch the latest scheme record
@@ -376,36 +408,6 @@ const getbc_no = async (req, res) => {
     return res.status(500).send({ status: false, message: error.message });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 module.exports = {
   createBcDateRecord,
