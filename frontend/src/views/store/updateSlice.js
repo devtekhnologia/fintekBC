@@ -2,8 +2,8 @@
 // import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import axios from "axios";
 
-// // Define the API base URL using process.env.REACT_APP_BACKEND_URL or default to 'http://65.0.85.112:3004'
-// const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://65.0.85.112:3004';
+// // Define the API base URL using process.env.REACT_APP_BACKEND_URL or default to 'http://13.233.79.22:3003'
+// const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://13.233.79.22:3003';
 
 // const initialState = {
 //   loading: false,
@@ -101,7 +101,7 @@ export const updateCommission = createAsyncThunk(
 "update/updateCommission",
 async (dataToUpdate, { rejectWithValue }) => {
 try {
-// const response = await axios.post("http://65.0.85.112:3004/updatecommission", dataToUpdate);
+// const response = await axios.post("http://13.233.79.22:3003/updatecommission", dataToUpdate);
 const response = await axios.post(`${API_BASE_URL}/updatecommission`, dataToUpdate);
 return response.data;
 } catch (error) {
@@ -115,7 +115,7 @@ export const updatetTotal = createAsyncThunk(
 "update/updateTotal",
 async (dataToUpdate, { rejectWithValue }) => {
 try {
-// const response = await axios.post("http://65.0.85.112:3004/updatotal", dataToUpdate);
+// const response = await axios.post("http://13.233.79.22:3003/updatotal", dataToUpdate);
 
 const response = await axios.post(`${API_BASE_URL}/updatotal`, dataToUpdate);
 

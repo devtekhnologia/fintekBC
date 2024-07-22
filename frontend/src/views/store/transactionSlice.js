@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://65.0.85.112:3004';
+// const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://13.233.79.22:3003';
 import {apiurl} from '../../Api/apiurl'
 const API_BASE_URL = apiurl;
 

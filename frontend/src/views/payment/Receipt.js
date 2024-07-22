@@ -57,7 +57,7 @@ const Receipt = () => {
 
 
     try {
-      // const response = await axios.post("http://65.0.85.112:3004/drowpdown", {
+      // const response = await axios.post("http://13.233.79.22:3003/drowpdown", {
       //   sch_name: schemeName,
       // });
       const response = await axios.post(`${API_BASE_URL}/drowpdown`, {
@@ -75,7 +75,7 @@ const Receipt = () => {
     try {
       console.log(value);
 
-      // const response1 = await axios.post("http://65.0.85.112:3004/getbcdate", {
+      // const response1 = await axios.post("http://13.233.79.22:3003/getbcdate", {
       //   sch_name: value.sch_name,
       //   bc_no: value.bc_no,
       // });
