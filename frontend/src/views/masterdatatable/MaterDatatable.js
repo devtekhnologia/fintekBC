@@ -292,13 +292,24 @@ const MaterDatatable = () => {
                         >
                           Edit
                         </Button>
+
+                        {/* 
                         <Button
                           className="btn mx-2 mb-2 mb-md-0"
                           style={bgcolor1}
                           onClick={() => handleDelete(member.mem_id)}
                         >
                           Delete
-                        </Button>
+                        </Button> */}
+                        {!(member.mem_id== 1 || member.mem_id == 2) && (
+                          <Button
+                            className="btn mx-2 mb-2 mb-md-0"
+                            style={bgcolor1}
+                            onClick={() => handleDelete(member.mem_id)}
+                          >
+                            Delete
+                          </Button>
+                        )}
                       </td>
                     </tr>
                   ))}

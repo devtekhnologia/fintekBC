@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMembers,
   addMember,
   fetchAllMembers,
   clearMembers,
-  deletememberScheme
+  deletememberScheme,
 } from "../store/memberSlice1";
+import { checkstatus } from "../store/apiService";
 
 const CreateMember1 = () => {
   const { schemeId } = useParams();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const members1 = useSelector((state) => state.member.members1);
   const members = useSelector((state) => state.member.members);
   // const memberStatus = useSelector((state) => state.member.status);
   // const error = useSelector((state) => state.member.error);
-
+  const [checkvalue, setCheckvalue] = useState();
   const [value, setValue] = useState({
     mem_name: "",
     sch_id: schemeId,
@@ -26,7 +27,16 @@ const CreateMember1 = () => {
 
   const [showForm, setShowForm] = useState(false);
 
-  useEffect(() => {  
+  const statuscheck = async () => {
+    const res = await checkstatus(schemeId);
+    setCheckvalue(res[0].bc_status);
+  };
+
+  useEffect(() => {
+    statuscheck();
+  }, []);
+
+  useEffect(() => {
     dispatch(fetchAllMembers());
   }, [dispatch]);
 
@@ -48,7 +58,7 @@ const CreateMember1 = () => {
     try {
       const value1 = {
         mem_id: id,
-        sch_id: schemeId
+        sch_id: schemeId,
       };
       await dispatch(deletememberScheme(value1));
       // Fetch members again after deletion
@@ -73,15 +83,15 @@ const CreateMember1 = () => {
     setShowForm(!showForm);
   };
   const bgcolo = {
-    backgroundColor: '#00bcd4', // Background color
-    color: 'black' // Text color
+    backgroundColor: "#00bcd4", // Background color
+    color: "black", // Text color
   };
   // const bgcolor1 = {
   //   backgroundColor: 'red', // Background color
   //   color: 'black' // Text color
   // };
   return (
-    <Container fluid className="px-1 mx-auto">  
+    <Container fluid className="px-1 mx-auto">
       <div className="container">
         <Row>
           <Col className="text-end pe-lg-5">
@@ -146,27 +156,26 @@ const CreateMember1 = () => {
                      </div>
                     </div> */}
 
-
-<div className="pt-4 d-flex justify-content-center">
-      <div className="d-flex flex-wrap">
-        <Button
-          type="submit"
-          style={bgcolo}
-          className="btn-block mb-2 me-2"
-      
-        >
-          ADD MEMBER
-        </Button>
-        <Button
-          type="submit"
-          style={bgcolo}
-          className="btn-block mb-2"
-          onClick={() => navigate('/agency/createmember')}
-        >
-          CREATE 
-        </Button>
-      </div>
-    </div>
+                    <div className="pt-4 d-flex justify-content-center">
+                      <div className="d-flex flex-wrap">
+                        {checkvalue==0 ?  <Button
+                          type="submit"
+                          style={bgcolo}
+                          className="btn-block mb-2 me-2"
+                        >
+                          ADD MEMBER
+                        </Button>:<></>}
+                       
+                        <Button
+                          type="submit"
+                          style={bgcolo}
+                          className="btn-block mb-2"
+                          onClick={() => navigate("/agency/createmember")}
+                        >
+                          CREATE
+                        </Button>
+                      </div>
+                    </div>
                   </Col>
                 </Row>
               </Form>
@@ -188,7 +197,11 @@ const CreateMember1 = () => {
                     <th scope="col">Name</th>
                     <th scope="col">Mobile NO</th>
                     <th scope="col">Address</th>
-                    <th scope="col">Action</th>
+
+
+{checkvalue==0 ? <th scope="col">Action</th> :null}
+                  
+
                   </tr>
                 </thead>
                 <tbody>
@@ -198,7 +211,9 @@ const CreateMember1 = () => {
                       <td>{post1.mem_name}</td>
                       <td>{post1.mem_mobile}</td>
                       <td>{post1.mem_address}</td>
-                      <td>
+
+
+                      {checkvalue==0?  <td>
                         <Button
                           className="btn mx-2 mb-2 mb-md-0"
                           style={bgcolo}
@@ -206,7 +221,8 @@ const CreateMember1 = () => {
                         >
                           Remove
                         </Button>
-                      </td>
+                      </td>:null}
+                     
                     </tr>
                   ))}
                 </tbody>

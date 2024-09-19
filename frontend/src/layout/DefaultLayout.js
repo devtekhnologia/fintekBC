@@ -1,5 +1,9 @@
 import React from 'react'
-import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/index'
+import AppSidebar from '../components/AppSidebar'
+import AppContent from '../components/AppContent'
+import AppHeader from '../components/AppHeader'
+import AppFooter from '../components/AppFooter'
+
 
 const DefaultLayout = () => {
   return (
@@ -17,3 +21,4 @@ const DefaultLayout = () => {
 }
 
 export default DefaultLayout
+

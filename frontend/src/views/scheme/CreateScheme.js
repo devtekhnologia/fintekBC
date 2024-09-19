@@ -63,6 +63,13 @@ const CreateScheme = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
+
+
+
+        console.log("object")
+        console.log(value);
+        console.log("object")
+        
         const response = await dispatch(createScheme(value)).unwrap();
         setModalMessage(response.message);
         setShowModal(true);

@@ -14,7 +14,7 @@ import reportReducer from './reportSlice'
 import receiptReducer from './receiptSlice'
 import updateReducer from './updateSlice'
 import dateReducer from './dateSlice'
-import Scheme from '../scheme/Scheme';
+// import Scheme from '../scheme/Scheme';
 import Scheme1Reducer from './schSlice'
 import forgotPasswordReducer from './forgotPasswordSlice'
 export default configureStore({

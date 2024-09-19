@@ -9,7 +9,7 @@ const app = express();
 
 app.use(cors());
 
-const port = 3003;
+const port = 3002;
 app.use(bodyParser.json());
 // Middleware
 app.use(express.json());

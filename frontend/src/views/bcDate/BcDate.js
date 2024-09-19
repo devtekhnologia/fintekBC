@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBcDateData, updateBcDate } from '../store/dateSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from "react-bootstrap";
+
 
 function BcDate() {
   const {schemeId}=useParams()
   const dispatch = useDispatch();
   const bcDateData = useSelector((state) => state.date);
+   const navigate=useNavigate();
 
   useEffect(() => {
     dispatch(fetchBcDateData({sch_id:schemeId}));
@@ -15,10 +18,18 @@ function BcDate() {
   const handleDateChange = (id, newDate) => {
     dispatch(updateBcDate({ id, newDate }));
   };
+  console.log(bcDateData)
 
   return (
     <div>
-      <h2 className='text-center'>BcDate</h2>
+    <div>
+      <h2 className='text-center'>BC Date</h2> 
+      <div className='container'> 
+      <div className="d-flex justify-content-end">
+       <Button onClick={()=>{navigate(`/agency/bcdatemessge/${schemeId}`)}}>Send BCDate Message</Button>
+
+     </div>
+      </div>
       <div className="container">
         <div className="py-4">
           <div className="table-responsive">
@@ -54,6 +65,7 @@ function BcDate() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

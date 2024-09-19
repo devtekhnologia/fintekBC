@@ -9,7 +9,7 @@ import {
   CSidebarToggler,
 } from "@coreui/react";
 
-import { AppSidebarNav } from "./AppSidebarNav";
+import { Appnav } from "./Appnav";
 import navigation from "../_nav";
 
 import { set } from "../views/store/uiSlice";
@@ -47,7 +47,7 @@ const AppSidebar = () => {
         />
       </CSidebarHeader>
       <div className="pt-3"></div>
-      <AppSidebarNav items={navigation} />
+      <Appnav items={navigation} />
       <CSidebarFooter className="border-top d-none d-lg-flex">
         <CSidebarToggler
           onClick={() => dispatch(set({ sidebarUnfoldable: !unfoldable }))}

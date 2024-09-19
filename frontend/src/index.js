@@ -7,7 +7,6 @@ import { Provider } from 'react-redux'
 import 'core-js'
 import store from '../src/views/store/store'
 
-// import store from '../src/views/store/store'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
