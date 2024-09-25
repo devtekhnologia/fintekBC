@@ -89,8 +89,6 @@ const winnerData = async (req, res) => {
   }
 };
 
-
-
 // const getWinnerData = async (req, res) => {
 //   const { bid_sch_id, } = req.body;
 
@@ -178,29 +176,6 @@ const winnerData = async (req, res) => {
 //     return res.status(500).send({ status: false, message: err.message });
 //   }
 // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const getWinnerData = async (req, res) => {
   const { bid_sch_id,bid_bcdate_id } = req.body;

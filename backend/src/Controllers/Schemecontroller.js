@@ -21,6 +21,9 @@ const createScheme = async (req, res) => {
     const commission = sch_commission === '' ? null : sch_commission;
     const commissionAmount = sch_commission_amount === '' ? null : sch_commission_amount;
 
+
+    console.log(sch_name)
+
     // Validation logic
     if (
       !sch_name ||

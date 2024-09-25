@@ -6,7 +6,7 @@
 
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { CSpinner, useColorModes } from "@coreui/react";
+import { useColorModes } from "@coreui/react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DefaultLayout from "./layout/DefaultLayout";
 import Login from "./views/pages/login/Login";
@@ -36,8 +36,8 @@ import EnterOtp from "./views/pages/login/EnterOtp";
 import ChangePassword from "./views/pages/login/ChangePassword";
 import WinnerData from "./views/beading/WinnerData";
 import Bcdatamessage from "./views/bcDate/Bcdatamessage";
-import Hello from "./views/bcDate/Hello";
 import ProtectedRoute from "./components/ProtectedRoute";
+
 
 function App() {
   const { isColorModeSet, setColorMode } = useColorModes("coreui-free-react-admin-template-theme");
@@ -87,6 +87,7 @@ function App() {
             <Route path="/agency/searchmonthpaymentdetail/:schemeId" element={<SearchMonthPaymentDetails />} />
             <Route path="/agency/history" element={<HistoryAmount />} />
             <Route path="/agency/payment" element={<Payment />} />
+
             <Route path="/agency/receipt" element={<Receipt />} />
             <Route path="/agency/tmreport" element={<Tmreport />} /> 
             <Route path="/agency/update/:schemeId" element={<Upate />} />

@@ -262,13 +262,14 @@
 // export default Receipt;
 
 
+
+
+
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { createPayment1, sendAdditionalData } from "../store/paymentSlice";
 import { fetchAllMembers } from "../store/memberSlice1";
-import { fetchSchemeName } from "../store/winnersSlice";
-import axios from "axios";
 import { apiurl } from "../../Api/apiurl";
 import {sendReceviedPayment} from '../store/apiService'
 
@@ -276,11 +277,7 @@ import {sendReceviedPayment} from '../store/apiService'
 const Receipt = () => {
   const dispatch = useDispatch();
   const members1 = useSelector((state) => state.member?.members1 || []);
-  const schemeNames = useSelector((state) => state.winners?.schemeNames || []);
-  // const payments = useSelector((state) => state.payments?.payments || []);
-  // const error = useSelector((state) => state.payments?.error);
-  const API_BASE_URL = apiurl;
-  const [Name, setName] = useState([]);
+
 
   const bgcolo = {
     backgroundColor: "#00bcd4", // Background color
@@ -289,10 +286,9 @@ const Receipt = () => {
 
   const [value, setValue] = useState({
     mem_name: "",
-    sch_name: "",
     amount: "",
     p_date: "",
-    bc_no: "",
+    remark:"",
   });
   console.log(value)
   const [showModal, setShowModal] = useState(false);
@@ -301,7 +297,6 @@ const Receipt = () => {
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(fetchAllMembers());
-      await dispatch(fetchSchemeName());
     };
     fetchData();
   }, [dispatch]);
@@ -313,39 +308,15 @@ const Receipt = () => {
     });
   };
 
-  const handleSchemeChange = async (e) => {
-    const schemeName = e.target.value;
-    setValue({
-      ...value,
-      sch_name: schemeName,
-    });
-
-
-    try {
-     
-      const response = await axios.post(`${API_BASE_URL}/drowpdown`, {
-        sch_name: schemeName,
-      });
-      setName(response.data.bc_no);
-      console.log("API response for scheme change:", response.data.bc_no);
-    } catch (error) {
-      console.error("Error fetching data for selected scheme:", error);
-    }
-  };
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(value);
-      const response1 = await axios.post(`${API_BASE_URL}/getbcdate`, {
-        sch_name: value.sch_name,
-        bc_no: value.bc_no,
-      });
 
-      const bcdate_id = response1.data.data;
-      console.log(response1.data.data)
 
+      const bcdate_id = '0';
+ 
       const newvalue = {
         v_date: value.p_date,
         v_amount: value.amount,
@@ -355,23 +326,21 @@ const Receipt = () => {
       await dispatch(sendAdditionalData(newvalue)).unwrap();
 
       const newvalue1 = {
-        sch_name: value.sch_name,
         mem_name: value.mem_name,
         amount: value.amount,
-        bcdate_id:bcdate_id,
+        remark:value.remark
       };
       
       await dispatch(createPayment1(newvalue1)).unwrap();
-     const res=await sendReceviedPayment({schname:value.sch_name,amount:value.amount,memname:value.mem_name,bcno:value.bc_no}) 
+    //  const res=await sendReceviedPayment({schname:value.sch_name,amount:value.amount,memname:value.mem_name,bcno:value.bc_no}) 
 
       setModalMessage("Payment is done");
       setShowModal(true);
       setValue({
         mem_name: "",
-        sch_name: "",
         amount: "",
         p_date: "",
-        bc_no: "",
+        remark:"",
       });
     } catch (error) {
       setModalMessage("Error creating payment: " + (error.message || error));
@@ -396,7 +365,7 @@ const Receipt = () => {
               <Row className="justify-content-between text-left m-0 pb-2">
                 <Col sm={6} className="flex-column d-flex">
                   <Form.Group>
-                    <Form.Label>
+                    <Form.Label className="pb-1">
                       Name<span className="text-danger"> *</span>
                     </Form.Label>
                     <Form.Control
@@ -416,30 +385,8 @@ const Receipt = () => {
                   </Form.Group>
                 </Col>
 
-                <Col sm={6} className="flex-column d-flex">
-                  <Form.Group>
-                    <Form.Label>
-                      Scheme Name<span className="text-danger"> *</span>
-                    </Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="sch_name"
-                      value={value.sch_name}
-                      onChange={handleSchemeChange}
-                      required
-                    >
-                      <option value="">Select Scheme</option>
-                      {schemeNames.map((scheme, index) => (
-                        <option key={index} value={scheme}>
-                          {scheme}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row className="justify-content-between text-left m-0 pb-3 pt-3">
-                <Col sm={6} lg={4} className="flex-column d-flex">
+
+                <Col sm={6}  className="flex-column d-flex">
                   <Form.Group>
                     <Form.Label>
                       Amount<span className="text-danger"> *</span>
@@ -454,29 +401,11 @@ const Receipt = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col sm={6} lg={4} className="flex-column d-flex pt-1">
-                  <Form.Group>
-                    <Form.Label>
-                      Bc NO<span className="text-danger"> *</span>
-                    </Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="bc_no"
-                      value={value.bc_no}
-                      onChange={handleInput}
-                      required
-                    >
-                      <option value="">Select Bc NO</option>
-                      {Name.map((bc, index) => (
-                        <option key={index} value={bc.bc_no}>
-                          {bc.bc_no}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
 
-                <Col sm={6} lg={4}  className="flex-column d-flex">
+              </Row>
+              <Row className="justify-content-between text-left m-0 pb-3 pt-3">
+          
+                <Col lg={6}  >
                   <Form.Group>
                     <Form.Label>
                       Date<span className="text-danger">*</span>
@@ -490,6 +419,25 @@ const Receipt = () => {
                     />
                   </Form.Group>
                 </Col>
+
+
+                <Col sm={6}  className="flex-column d-flex">
+                  <Form.Group>
+                    <Form.Label>
+                      Remark<span className="text-danger"> *</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="remark"
+                      value={value.remark}
+                      onChange={handleInput}
+                      placeholder="Write Remark"
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+
+
               </Row>
 
               <Row className="justify-content-center m-0 pt-3">

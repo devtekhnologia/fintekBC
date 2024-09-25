@@ -1,13 +1,14 @@
 export const CreateSchemeValidation = (values) => {
   let errors = {};
-  const name_pattern = /^[a-zA-Z]+(?: [a-zA-Z]+)*\d*$/;
-  const commisson_pattern = /^100(\.0{1,2})?$|^([1-9]?\d(\.\d{1,2})?|0(\.\d{1,2})?)$/;
+  const name_pattern = /^(?:[a-zA-Z]+(?: [a-zA-Z]+)*\s?\d*|\d+[a-zA-Z]+)$/;
+  // const commisson_pattern = /^100(\.0{1,2})?$|^([1-9]?\d(\.\d{1,2})?|0(\.\d{1,2})?)$/;
   const number_pattern = /^(?!0\d)\d+$/;
+
 
   if (values.sch_name === "") {
     errors.sch_name = "Name should not be empty";
   } else if (!name_pattern.test(values.sch_name)) {
-    errors.sch_name = "Name should contain only alphabetic characters";
+    errors.sch_name = "Name should contain only alphabetic characters or numbers in the correct format";
   }
 
   if (values.sch_starting_date === "") {

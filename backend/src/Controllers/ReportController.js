@@ -234,13 +234,13 @@ const getreport = async (req, res) => {
       tbl_member.mem_name AS name,
       tbl_vaoucher.v_date AS date,
       tbl_transaction.t_amount AS amount,
-      tbl_transaction.t_remark AS remark,
-      tbl_scheme.sch_name AS scheme_name
+      tbl_transaction.t_remark1 AS remark
     FROM tbl_member
     JOIN tbl_transaction ON tbl_member.mem_id = tbl_transaction.t_mem_id
     JOIN tbl_vaoucher ON tbl_transaction.t_vid = tbl_vaoucher.v_id
-    JOIN tbl_scheme ON tbl_transaction.t_sch_id = tbl_scheme.sch_id
-    WHERE tbl_member.mem_id = ?`;
+    WHERE tbl_member.mem_id = ?;
+  `;
+
 
     const getdata = await query(getdataQuery, [memberId]);
 

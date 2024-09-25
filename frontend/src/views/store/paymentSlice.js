@@ -148,7 +148,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { apiurl } from '../../Api/apiurl'
+import { apiurl } from "../../Api/apiurl";
 const API_BASE_URL = apiurl;
 
 // Async thunk for creating a new payment

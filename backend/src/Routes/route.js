@@ -124,6 +124,8 @@ router.post(
 router.post("/winnerentryvoucher", VoucherController.createvoucher);
 router.post("/w", VoucherController.checkTotalNo);
 router.post("/w1", VoucherController.checkWinnerPresentFormonth);
+router.post("/checkstatus_of_scheme", VoucherController.checkbcdatestatus);
+
 
 //Report api
 router.post("/reportmember", ReportController.getreport);
@@ -131,11 +133,8 @@ router.post("/reportmember1", ReportController.getreport2);
 
 router.post("/reportlastmonth", ReportController.getreportlastmonth);
 
-
-
 router.post("/register", authController.register);
 router.post("/login", authController.login);
-
 router.post("/bcdate", bcdateController.createBcDateRecord);
 router.get("/fetchbcdata", bcdateController.fetchBcDateRecord);
 router.post("/fetchbcdatascheme", bcdateController.fetchBcDateRecordschemeId);
@@ -145,13 +144,6 @@ router.post("/updatstatus", bcdateController.updateBcDateStatus);
 router.post("/drowpdown", bcdateController.Dropdown);
 router.post("/getbcdate", bcdateController.getreceiptbcdateId);
 router.post("/getbcno", bcdateController.getbc_no);
-
-
-
-
-
-
-
 router.post('/sendwinner', whatsappController.sendWinner);
 router.post('/sendwinnerinfo', whatsappController.sendMessageWinnerInfo)
 router.post('/sendbcdate', whatsappController.sendbcDate);
@@ -159,18 +151,10 @@ router.post('/sendpenddingamount', whatsappController.sendPenddingAmount)
 router.post('/crediteamount', whatsappController.sendcredited)
 router.post('/deabiteamount', whatsappController.senddebiated)
 
-
-
-
 //forgot password
 router.post('/sendotp',forgotController.sendOtp);
 router.post('/verifyotp',forgotController.verifyOtp);
 router.post('/changepassword',forgotController.changePassword);
-
-
-
-
-
 
 
 router.post("/hello", SchemeController.CheckTotaladdschememember);

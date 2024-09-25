@@ -35,7 +35,7 @@ const AppSidebar = () => {
       <CSidebarHeader className="text-center">
         <CSidebarBrand to="/" className=" text-decoration-none">
           {!unfoldable ? (
-            <h2 className="text-center pt-3 ps-5 ">Fintek</h2>
+            <h2 className="text-center pt-3 ps-5 ">Fintek BC</h2>
           ) : (
             <></>
           )}

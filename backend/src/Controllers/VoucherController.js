@@ -139,6 +139,33 @@ const createvoucher = async (req, res) => {
   
 
 
+  
+  const checkbcdatestatus = async (req, res) => {
+    try {
+      const { sch_id } = req.body;
+  
+      if (!sch_id) {
+        return res.status(400).send({ status: false, message: "Please provide the scheme ID" });
+      }
+  
+      const getTotalMemberQuery1 = "SELECT bc_status FROM tbl_bcdate WHERE dc_sch_id = ? ORDER BY bcdate_id LIMIT 1";
+      const result = await query(getTotalMemberQuery1, [sch_id]);
+  
+      if (result.length > 0) {
+        return res.status(200).send({
+          status: true,
+          data:result, // Sending the first record if found
+          message: "bc is",
+        });
+      } else {
+        return res.status(404).send({ status: false, message: "No records found" });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ status: false, message: error.message });
+    }
+  };
+  
 
 
 
@@ -157,7 +184,8 @@ const createvoucher = async (req, res) => {
 
 
 
- module.exports = {createvoucher,checkTotalNo,checkWinnerPresentFormonth};
+
+ module.exports = {createvoucher,checkTotalNo,checkWinnerPresentFormonth,checkbcdatestatus};
 
 
 

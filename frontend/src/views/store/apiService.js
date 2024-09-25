@@ -82,16 +82,16 @@ export const checkMember = async (value) => {
   }
 };
 
-export const checkWinner1 = async (value) => {
-  try {
-    console.log("Request payload:", value);
-    const response = await axios.post(`${API_BASE_URL}/w1`, value);
-    return response;
-  } catch (error) {
-    console.error("Error checking winner: ", error);
-    throw error;
-  }
-};
+// export const checkWinner1 = async (value) => {
+//   try {
+//     console.log("Request payload:", value);
+//     const response = await axios.post(`${API_BASE_URL}/w1`, value);
+//     return response;
+//   } catch (error) {
+//     console.error("Error checking winner: ", error);
+//     throw error;
+//   }
+// };
 
 export const winnerLastmonth = async (value) => {
   try {

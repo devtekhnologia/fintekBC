@@ -100,9 +100,10 @@ const trasactionentrymember1 = async (req, res) => {
 
     const memIds = members.map((row) => row.schmem_mem_id);
 
+
     // Step 2: Get the amount per head for the scheme
     const findAmountPerHeadQuery =
-      "SELECT sch_amount_per_head FROM tbl_scheme WHERE sch_id = ?";
+      "SELECT sch_amount_per_head,sch_name FROM tbl_scheme WHERE sch_id = ?";
     const schAmountPerHeadResult = await query(findAmountPerHeadQuery, [
       bid_sch_id,
     ]);
@@ -114,6 +115,7 @@ const trasactionentrymember1 = async (req, res) => {
     }
 
     const schAmountPerHead = schAmountPerHeadResult[0].sch_amount_per_head;
+    const schemeneme=schAmountPerHeadResult[0].sch_name;
     const t_amount = -schAmountPerHead;
 
     // Step 3: Get the last voucher ID
@@ -131,7 +133,7 @@ const trasactionentrymember1 = async (req, res) => {
 
     // Step 4: Insert transaction entries for each member using map and Promise.all
     const insertTransactionQuery =
-      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark, t_bcdate_id) VALUES (?, ?, ?, ? , ?, ?)";
+      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark, t_bcdate_id,t_remark1) VALUES (?, ?, ?, ? , ?, ?,?)";
 
     await Promise.all(
       memIds.map((memId) =>
@@ -141,7 +143,8 @@ const trasactionentrymember1 = async (req, res) => {
           t_amount,
           bid_sch_id,
           1,
-          bid_bcdate_id
+          bid_bcdate_id,
+          schemeneme
         ])
       )
     );
@@ -271,7 +274,7 @@ const trasactionentrymember2 = async (req, res) => {
 
     // Step 1: Get the total amount for the scheme
     const findAmountTotalQuery =
-      "SELECT sch_total,sch_fiexd_total FROM tbl_scheme WHERE sch_id = ?";
+      "SELECT sch_total,sch_fiexd_total,sch_name FROM tbl_scheme WHERE sch_id = ?";
     const schAmountTotalResult = await query(findAmountTotalQuery, [
       bid_sch_id,
     ]);
@@ -285,6 +288,7 @@ const trasactionentrymember2 = async (req, res) => {
 
     const schTotal = schAmountTotalResult[0].sch_total;
     const sch_fiexd_total = schAmountTotalResult[0].sch_fiexd_total;
+const schemename= schAmountTotalResult[0].sch_name
     const t_amount = -sch_fiexd_total;
 
     // Step 2: Get the last voucher ID
@@ -303,14 +307,15 @@ const trasactionentrymember2 = async (req, res) => {
 
     // Step 3: Insert a transaction entry for the agency
     const insertTransactionQuery =
-      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark, t_bcdate_id) VALUES (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark, t_bcdate_id,t_remark1) VALUES (?, ?, ?, ?, ?, ?,?)";
     await query(insertTransactionQuery, [
       recent_v_id,
       agency_id,
       sch_fiexd_total,
       bid_sch_id,
       2,
-      bid_bcdate_id
+      bid_bcdate_id,
+      schemename
     ]);
     return res.status(200).send({
       status: true,
@@ -416,7 +421,7 @@ const trasactionentrymember8 = async (req, res) => {
 
     // Step 1: Get the total amount for the scheme
     const findAmountTotalQuery =
-      "SELECT sch_total,sch_fiexd_total FROM tbl_scheme WHERE sch_id = ?";
+      "SELECT sch_total,sch_fiexd_total,sch_name FROM tbl_scheme WHERE sch_id = ?";
     const schAmountTotalResult = await query(findAmountTotalQuery, [
       bid_sch_id,
     ]);
@@ -430,6 +435,8 @@ const trasactionentrymember8 = async (req, res) => {
 
     const schTotal = schAmountTotalResult[0].sch_total;
     const sch_fiexd_total = schAmountTotalResult[0].sch_fiexd_total;
+    const schemename = schAmountTotalResult[0].sch_name;
+
     const t_amount = -sch_fiexd_total;
 
     // Step 2: Get the last voucher ID
@@ -449,14 +456,15 @@ const trasactionentrymember8 = async (req, res) => {
 
 
     const insertTransactionQuery2 =
-      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark ,t_bcdate_id) VALUES (?, ?, ?, ?, ? , ?)";
+      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark ,t_bcdate_id,t_remark1) VALUES (?, ?, ?, ?, ? , ?,?)";
     await query(insertTransactionQuery2, [
       recent_v_id,
       agency_id,
       t_amount,
       bid_sch_id,
       2,
-      bid_bcdate_id
+      bid_bcdate_id,
+      schemename
     ]);
 
     return res.status(200).send({
@@ -703,7 +711,7 @@ const trasactionentrymember3 = async (req, res) => {
     const { bid_sch_id,bid_bcdate_id } = req.body;
     // Step 1: Get the total amount for the scheme
     const findAmountTotalQuery1 =
-      "SELECT sch_total ,sch_commission FROM tbl_scheme WHERE sch_id = ?";
+      "SELECT sch_total ,sch_commission,sch_name FROM tbl_scheme WHERE sch_id = ?";
     const schAmountTotalResult1 = await query(findAmountTotalQuery1, [
       bid_sch_id,
     ]);
@@ -716,6 +724,7 @@ const trasactionentrymember3 = async (req, res) => {
 
     const schTotal = schAmountTotalResult1[0].sch_total;
     const commission = schAmountTotalResult1[0].sch_commission;
+    const schemename = schAmountTotalResult1[0].sch_name;
 
     
 
@@ -764,14 +773,15 @@ console.log(bid_amount)
 
     // Step 4: Insert a transaction entry for the highest bid
     const insertTransactionQuery =
-      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id) VALUES (?, ?, ?, ? , ? , ?)";
+      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id,t_remark1) VALUES (?, ?, ?, ? , ? , ?,?)";
     await query(insertTransactionQuery, [
       recent_v_id,
       bid_mem_id,
       winnerAmount,
       bid_sch_id,
       remark,
-      bid_bcdate_id
+      bid_bcdate_id,
+      schemename
     ]);
 
     return res.status(200).send({
@@ -785,19 +795,6 @@ console.log(bid_amount)
       .send({ status: false, message: "Internal Server Error" });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -965,7 +962,7 @@ const trasactionentrymember4 = async (req, res) => {
 
     // Step 1: Get the total amount for the scheme
     const findAmountTotalQuery =
-      "SELECT sch_total ,sch_commission ,sch_commission_amount,sch_status,sch_fiexd_total FROM tbl_scheme WHERE sch_id = ?";
+      "SELECT sch_total ,sch_commission ,sch_commission_amount,sch_status,sch_fiexd_total,sch_name FROM tbl_scheme WHERE sch_id = ?";
     const schAmountTotalResult = await query(findAmountTotalQuery, [
       bid_sch_id,
     ]);
@@ -981,6 +978,7 @@ const trasactionentrymember4 = async (req, res) => {
     const commission_amount = schAmountTotalResult[0].sch_commission_amount;
     const sch_status = schAmountTotalResult[0].sch_status;
     const sch_fiexd_total = schAmountTotalResult[0].sch_fiexd_total;
+    const schemename = schAmountTotalResult[0].sch_name;
 
 
 
@@ -1045,14 +1043,15 @@ if(sch_status===0){
 
     // Step 3: Insert a transaction entry for the agency
     const insertTransactionQuery =
-      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark ,t_bcdate_id) VALUES (?, ?, ?, ?, ? ,?)";
+      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark ,t_bcdate_id,t_remark1) VALUES (?, ?, ?, ?, ? ,?,?)";
     await query(insertTransactionQuery, [
       recent_v_id,
       agency_id,
       temp,
       bid_sch_id,
       4,
-      bid_bcdate_id
+      bid_bcdate_id,
+      schemename
     ]);
 
     return res.status(200).send({
@@ -1255,7 +1254,7 @@ const trasactionentrymember5 = async (req, res) => {
 
     // Step 2: Get the total for the scheme
     const findAmounTotalrHeadQuery =
-      "SELECT sch_total,sch_commission,sch_month FROM tbl_scheme WHERE sch_id = ?";
+      "SELECT sch_total,sch_commission,sch_month,sch_name FROM tbl_scheme WHERE sch_id = ?";
     const schAmountTResult = await query(findAmounTotalrHeadQuery, [
       bid_sch_id,
     ]);
@@ -1269,6 +1268,7 @@ const trasactionentrymember5 = async (req, res) => {
     const schATHead = schAmountTResult[0].sch_total;
     const schC = schAmountTResult[0].sch_commission;
     const schM = schAmountTResult[0].sch_month;
+    const schemename = schAmountTResult[0].sch_name;
 
     // Step 3: Get the last voucher ID
     const findLastVoucherIdQuery =
@@ -1327,7 +1327,7 @@ const trasactionentrymember5 = async (req, res) => {
 
     // Step 4: Insert transaction entries for each member using map and Promise.all
     const insertTransactionQuery =
-      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id) VALUES (?, ?, ?, ?, ? , ? )";
+      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id,t_remark1) VALUES (?, ?, ?, ?, ? , ?,? )";
 
     await Promise.all(
       memIds.map((memId) =>
@@ -1337,7 +1337,8 @@ const trasactionentrymember5 = async (req, res) => {
           remaingA,
           bid_sch_id,
           5,
-          bid_bcdate_id
+          bid_bcdate_id,
+          schemename
         ])
       )
     );
@@ -1352,63 +1353,6 @@ const trasactionentrymember5 = async (req, res) => {
       .send({ status: false, message: "Internal Server Error" });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // const trasactionentrymember6 = async (req, res) => {
@@ -1495,12 +1439,95 @@ const trasactionentrymember5 = async (req, res) => {
 
 
 
+///correct code/////
+
+// const trasactionentrymember6 = async (req, res) => {
+//   try {
+//     const { sch_name, mem_name, amount, bcdate_id } = req.body;
+//     if (!sch_name || !mem_name || !amount,!bcdate_id) {
+//       return res
+//         .status(400)
+//         .send({ status: false, message: "Please provide all required fields" });
+//     }
+//     // Step 1: Get the member ID associated with the provided mem_name
+//     const findMemberQuery = "SELECT mem_id FROM tbl_member WHERE mem_name = ?";
+//     const members = await query(findMemberQuery, [mem_name]);
+
+//     if (members.length === 0) {
+//       return res.status(404).send({
+//         status: false,
+//         message: "No members found with the provided member name",
+//       });
+//     }
+//     const memberId = members[0].mem_id;
+//     // Step 2: Get the scheme ID associated with the provided sch_name
+//     const findSchemeIdQuery =
+//       "SELECT sch_id FROM tbl_scheme WHERE sch_name = ?";
+//     const schemes = await query(findSchemeIdQuery, [sch_name]);
+
+//     if (schemes.length === 0) {
+//       return res.status(404).send({
+//         status: false,
+//         message: "No schemes found with the provided scheme name",
+//       });
+//     }
+//     const schemeId = schemes[0].sch_id;
+//     // Step 3: Get the last voucher ID
+//     const findLastVoucherIdQuery =
+//       "SELECT v_id FROM tbl_vaoucher ORDER BY v_id DESC LIMIT 1";
+//     const recentVoucherIdResult = await query(findLastVoucherIdQuery);
+
+//     if (!recentVoucherIdResult || recentVoucherIdResult.length === 0) {
+//       return res.status(404).send({
+//         status: false,
+//         message: "No voucher found",
+//       });
+//     }
+
+//     const recent_v_id = recentVoucherIdResult[0].v_id;
+
+//     // Step 4: Insert the transaction for the member and the agency
+//     const insertTransactionQuery =
+//       "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)";
+//     await query(insertTransactionQuery, [
+//       recent_v_id,
+//       memberId,
+//       amount,
+//       schemeId,
+//       6,
+//       bcdate_id,
+//       recent_v_id,
+//       1,
+//       -amount,
+//       schemeId,
+//       6,
+//       bcdate_id
+//     ]);
+
+//     return res.status(200).send([
+//       {
+//         status: true,
+//         message: "Transaction entry inserted successfully",
+//       },
+//     ]);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).send({
+//       status: false,
+//       message: "Internal Server Error",
+//     });
+//   }
+// };
+
+////correct code//////
+
+
 
 
 const trasactionentrymember6 = async (req, res) => {
   try {
-    const { sch_name, mem_name, amount, bcdate_id } = req.body;
-    if (!sch_name || !mem_name || !amount,!bcdate_id) {
+    const { mem_name, amount,remark } = req.body;
+    if ( !mem_name || !amount) {
       return res
         .status(400)
         .send({ status: false, message: "Please provide all required fields" });
@@ -1517,17 +1544,17 @@ const trasactionentrymember6 = async (req, res) => {
     }
     const memberId = members[0].mem_id;
     // Step 2: Get the scheme ID associated with the provided sch_name
-    const findSchemeIdQuery =
-      "SELECT sch_id FROM tbl_scheme WHERE sch_name = ?";
-    const schemes = await query(findSchemeIdQuery, [sch_name]);
+    // const findSchemeIdQuery =
+    //   "SELECT sch_id FROM tbl_scheme WHERE sch_name = ?";
+    // const schemes = await query(findSchemeIdQuery, [sch_name]);
 
-    if (schemes.length === 0) {
-      return res.status(404).send({
-        status: false,
-        message: "No schemes found with the provided scheme name",
-      });
-    }
-    const schemeId = schemes[0].sch_id;
+    // if (schemes.length === 0) {
+    //   return res.status(404).send({
+    //     status: false,
+    //     message: "No schemes found with the provided scheme name",
+    //   });
+    // }
+    const schemeId = 0;
     // Step 3: Get the last voucher ID
     const findLastVoucherIdQuery =
       "SELECT v_id FROM tbl_vaoucher ORDER BY v_id DESC LIMIT 1";
@@ -1544,20 +1571,22 @@ const trasactionentrymember6 = async (req, res) => {
 
     // Step 4: Insert the transaction for the member and the agency
     const insertTransactionQuery =
-      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id,t_remark1) VALUES (?, ?, ?, ?, ?, ?,?), (?, ?, ?, ?, ?, ?,?)";
     await query(insertTransactionQuery, [
       recent_v_id,
       memberId,
       amount,
       schemeId,
       6,
-      bcdate_id,
+      0,
+      remark,
       recent_v_id,
       1,
       -amount,
       schemeId,
       6,
-      bcdate_id
+      0,
+      remark
     ]);
 
     return res.status(200).send([
@@ -1574,8 +1603,6 @@ const trasactionentrymember6 = async (req, res) => {
     });
   }
 };
-
-
 
 
 
@@ -1676,13 +1703,101 @@ const trasactionentrymember6 = async (req, res) => {
 
 
 
+////correct code//////
+
+
+// const trasactionentrymember7 = async (req, res) => {
+//   try {
+//     const { sch_name, mem_name, amount,bcdate_id } = req.body;
+//     if (!sch_name || !mem_name || !amount || !bcdate_id) {
+//       return res
+//         .status(400)
+//         .send({ status: false, message: "Please provide all required fields" });
+//     }
+//     // Step 1: Get the member ID associated with the provided mem_name
+//     const findMemberQuery = "SELECT mem_id FROM tbl_member WHERE mem_name = ?";
+//     const members = await query(findMemberQuery, [mem_name]);
+
+//     if (members.length === 0) {
+//       return res.status(404).send({
+//         status: false,
+//         message: "No members found with the provided member name",
+//       });
+//     }
+//     const memberId = members[0].mem_id;
+//     // Step 2: Get the scheme ID associated with the provided sch_name
+//     const findSchemeIdQuery =
+//       "SELECT sch_id FROM tbl_scheme WHERE sch_name = ?";
+//     const schemes = await query(findSchemeIdQuery, [sch_name]);
+
+//     if (schemes.length === 0) {
+//       return res.status(404).send({
+//         status: false,
+//         message: "No schemes found with the provided scheme name",
+//       });
+//     }
+//     const schemeId = schemes[0].sch_id;
+//     // Step 3: Get the last voucher ID
+//     const findLastVoucherIdQuery =
+//       "SELECT v_id FROM tbl_vaoucher ORDER BY v_id DESC LIMIT 1";
+//     const recentVoucherIdResult = await query(findLastVoucherIdQuery);
+
+//     if (!recentVoucherIdResult || recentVoucherIdResult.length === 0) {
+//       return res.status(404).send({
+//         status: false,
+//         message: "No voucher found",
+//       });
+//     }
+
+//     const recent_v_id = recentVoucherIdResult[0].v_id;
+
+//     // Step 4: Insert the transaction for the member and the agency
+//     const insertTransactionQuery =
+//       "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)";
+//     await query(insertTransactionQuery, [
+//       recent_v_id,
+//       memberId,
+//       -amount,
+//       schemeId,
+//       7,
+//       bcdate_id,
+//       recent_v_id,
+//       1,
+//       amount,
+//       schemeId,
+//       7,
+//       bcdate_id
+//     ]);
+
+//     return res.status(200).send([
+//       {
+//         status: true,
+//         message: "Transaction entry inserted successfully",
+//       },
+//     ]);
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).send({
+//       status: false,
+//       message: "Internal Server Error",
+//     });
+//   }
+// };
+
+
+////correct code//////
+
 
 
 
 const trasactionentrymember7 = async (req, res) => {
   try {
-    const { sch_name, mem_name, amount,bcdate_id } = req.body;
-    if (!sch_name || !mem_name || !amount || !bcdate_id) {
+    const {  mem_name, amount,remark } = req.body;
+
+
+    console.log( req.body)
+
+    if (!mem_name || !amount ) {
       return res
         .status(400)
         .send({ status: false, message: "Please provide all required fields" });
@@ -1699,17 +1814,17 @@ const trasactionentrymember7 = async (req, res) => {
     }
     const memberId = members[0].mem_id;
     // Step 2: Get the scheme ID associated with the provided sch_name
-    const findSchemeIdQuery =
-      "SELECT sch_id FROM tbl_scheme WHERE sch_name = ?";
-    const schemes = await query(findSchemeIdQuery, [sch_name]);
+    // const findSchemeIdQuery =
+    //   "SELECT sch_id FROM tbl_scheme WHERE sch_name = ?";
+    // const schemes = await query(findSchemeIdQuery, [sch_name]);
 
-    if (schemes.length === 0) {
-      return res.status(404).send({
-        status: false,
-        message: "No schemes found with the provided scheme name",
-      });
-    }
-    const schemeId = schemes[0].sch_id;
+    // if (schemes.length === 0) {
+    //   return res.status(404).send({
+    //     status: false,
+    //     message: "No schemes found with the provided scheme name",
+    //   });
+    // }
+    const schemeId = sch_name;
     // Step 3: Get the last voucher ID
     const findLastVoucherIdQuery =
       "SELECT v_id FROM tbl_vaoucher ORDER BY v_id DESC LIMIT 1";
@@ -1726,20 +1841,22 @@ const trasactionentrymember7 = async (req, res) => {
 
     // Step 4: Insert the transaction for the member and the agency
     const insertTransactionQuery =
-      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id) VALUES (?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO tbl_transaction (t_vid, t_mem_id, t_amount, t_sch_id, t_remark,t_bcdate_id,t_remark1) VALUES (?, ?, ?, ?, ?, ?,?), (?, ?, ?, ?, ?, ?,?)";
     await query(insertTransactionQuery, [
       recent_v_id,
       memberId,
       -amount,
       schemeId,
       7,
-      bcdate_id,
+      0,
+      remark,
       recent_v_id,
       1,
       amount,
       schemeId,
       7,
-      bcdate_id
+      0,
+      remark
     ]);
 
     return res.status(200).send([
@@ -1756,9 +1873,6 @@ const trasactionentrymember7 = async (req, res) => {
     });
   }
 };
-
-
-
 
 
 
