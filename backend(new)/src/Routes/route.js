@@ -163,9 +163,4 @@ router.post("/hello", SchemeController.CheckTotaladdschememember);
 // CheckTotaladdschememember
 
 
-
-
-
-
-
 module.exports = router;

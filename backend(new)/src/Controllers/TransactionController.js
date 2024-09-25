@@ -1824,7 +1824,7 @@ const trasactionentrymember7 = async (req, res) => {
     //     message: "No schemes found with the provided scheme name",
     //   });
     // }
-    const schemeId = sch_name;
+    const schemeId = 0;
     // Step 3: Get the last voucher ID
     const findLastVoucherIdQuery =
       "SELECT v_id FROM tbl_vaoucher ORDER BY v_id DESC LIMIT 1";
