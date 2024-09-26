@@ -1,14 +1,16 @@
 // dateSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { apiurl } from "../../Api/apiurl";
+const API_BASE_URL = apiurl;
 
 export const fetchBcDateData = createAsyncThunk('date/fetchBcDateData', async (value) => {
-  const response = await axios.post('http://localhost:3002/fetchbcdatascheme', value);
+  const response = await axios.post(`${API_BASE_URL}/fetchbcdatascheme`, value);
   return response.data.data;
 });
 
 export const updateBcDate = createAsyncThunk('date/updateBcDate', async ({ id, newDate }) => {
-  await axios.post('http://localhost:3002/updatedate', {
+  await axios.post(`${API_BASE_URL}/updatedate`, {
     bcdate_id: id,
     date: newDate,
   });
