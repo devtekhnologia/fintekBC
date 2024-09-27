@@ -35,7 +35,6 @@ router.post(
 );
 
 router.get("/getschemeName", SchemeController.getSchemeName);
-
 router.post("/updatecommission", SchemeController.updatecommission);
 router.post("/updatotal", SchemeController.updatotal);
 
