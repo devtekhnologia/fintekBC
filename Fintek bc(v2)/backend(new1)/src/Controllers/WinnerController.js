@@ -182,8 +182,8 @@ const getWinnerData = async (req, res) => {
 
   // Define the time range for the last 24 hours
 
-  const now = new Date();
-  const last24Hours = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  // const now = new Date();
+  // const last24Hours = new Date(now.getTime() - 24 * 60 * 60 * 1000);
 
   try {
     // Step 2: Get the highest bid amount for the scheme in the last 24 hours using created_at field
@@ -212,7 +212,7 @@ const getWinnerData = async (req, res) => {
 
    
     const findSchemeDetailQ = `
-      SELECT sch_total, sch_commission ,sch_status,sch_commission_amount
+      SELECT sch_fiexd_total, sch_commission ,sch_status,sch_commission_amount
       FROM tbl_scheme 
       WHERE sch_id = ?
     `;
@@ -225,8 +225,7 @@ const getWinnerData = async (req, res) => {
       });
     }
 
-    const { sch_total: schTotal, sch_commission: commission } = schemeTotal[0];
-
+    const { sch_fiexd_total: schTotal, sch_commission: commission } = schemeTotal[0];
 
 
     const findMember = `
