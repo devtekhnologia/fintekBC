@@ -358,6 +358,7 @@ const CreateMember1 = () => {
       mem_name: "",
       sch_id: schemeId,
     });
+    setSearchTerm('');
   };
 
   const toggleForm = () => {
@@ -370,6 +371,8 @@ const CreateMember1 = () => {
     backgroundColor: "#00bcd4",
     color: "black",
   };
+
+
 
   // Handle selecting a member from the dropdown
   const handleSelectMember = (member) => {

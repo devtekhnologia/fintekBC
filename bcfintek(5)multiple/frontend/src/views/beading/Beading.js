@@ -734,6 +734,9 @@
 
 ////////////////////////////////////////////////////////////
 
+
+
+
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Modal } from "react-bootstrap";
 import "./beading.css";
@@ -860,16 +863,11 @@ const selectedMemberNames = selectedMembers.map(member => member.mem_name).join(
 
 
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
-
-
     console.log(selectedMemberIds);
     const selectedMemberIdsString = JSON.stringify(selectedMemberIds);
-
 
     const newvalue={
       bid_name: selectedMemberIdsString,
@@ -885,6 +883,8 @@ const selectedMemberNames = selectedMembers.map(member => member.mem_name).join(
         bid_month: currentMonth,
         bid_sch_id: schemeId,
       });
+
+    setSelectedMemberIds([])
     } catch (error) {
       console.error("Error adding bid: ", error);
     }
@@ -1014,7 +1014,6 @@ const selectedMemberNames = selectedMembers.map(member => member.mem_name).join(
               <></>
             ) : (
               <Form onSubmit={handleSubmit}>
-                <Row className="justify-content-between text-left m-0 pb-2">
                   <Row>
                     <Col>
                       <div>
@@ -1027,58 +1026,83 @@ const selectedMemberNames = selectedMembers.map(member => member.mem_name).join(
                       </div>
                     </Col>
                   </Row>
+                  <Row className="justify-content-between text-left m-0 pb-2">
+
                   <Col sm={6} className="flex-column d-flex">
                     <Form.Group>
                       <Form.Label>
                         Name<span className="text-danger"> *</span>
                       </Form.Label>
 
-                      <Dropdown show={dropdownOpen} ref={dropdownRef}>
-                        <div className="dropdown_width">
-                        <Dropdown.Toggle
-                          id="dropdown-basic-button"
-                          onClick={toggleDropdown}
-                          className="background_dropdown"
-                        >
-                          {/* <span className="dropdown_width">{selectedMemberNames}</span> */}
-                     
-                          <span className="dropdown_width">Select Member</span>
-
-                        </Dropdown.Toggle>
-                        </div>
-                        <Dropdown.Menu
-                          className="w-100"
-                        >
-                          <Dropdown.Item as="div" className="p-2">
-                            <Form.Control
-                              type="text"
-                              placeholder="Search..."
-                              value={searchTerm}
-                              onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                          </Dropdown.Item>
 
 
-                          {/* <div>
-                            {filteredMembers}
-                          </div> */}
-                          {filteredMembers.map((member,index) => (
-                            <Dropdown.Item key={member.mem_id} as="div">
-                              <div className="d-flex align-items-center">
-                                <Form.Check
-                                  type="checkbox"
-                                  value={member.mem_id}
-                                  onChange={() => handleMemberSelect(member.mem_id)}
-                                  checked={selectedMemberIds.includes(
-                                    member.mem_id
-                                  )}
-                                />
-                                <span className="ps-3">{member.mem_name}</span>
-                              </div>
-                            </Dropdown.Item>
-                          ))}
-                        </Dropdown.Menu>
-                      </Dropdown>
+
+<Dropdown show={dropdownOpen} ref={dropdownRef} >
+
+  <Button
+    id="dropdown-basic-button"
+    onClick={toggleDropdown}
+    className="background_dropdown dropdown_width" 
+    // style={{width:'25rem'}}
+  >
+    <span className="w-100 d-flex justify-content-start ">
+      {selectedMemberNames.length > 0 ? selectedMemberNames : 'Select Member'}
+    </span>
+  </Button>
+
+
+
+  <Dropdown.Menu className="w-100">
+    <Dropdown.Item as="div" className="p-2">
+      <Form.Control
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+    </Dropdown.Item>
+
+    {filteredMembers.length > 0 ? (
+      filteredMembers.map((member, index) => (
+        <Dropdown.Item key={member.mem_id} as="div">
+          <div className="d-flex align-items-center">
+            <Form.Check
+              type="checkbox"
+              value={member.mem_id}
+              onChange={() => handleMemberSelect(member.mem_id)}
+              checked={selectedMemberIds.includes(member.mem_id)}
+            />
+            <span className="ps-3">{member.mem_name}</span>
+          </div>
+        </Dropdown.Item>
+      ))
+    ) : (
+      <Dropdown.Item as="div">No members found</Dropdown.Item>
+    )}
+  </Dropdown.Menu>
+</Dropdown>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                       {/* <Form.Control
                         as="select"
                         name="bid_name"

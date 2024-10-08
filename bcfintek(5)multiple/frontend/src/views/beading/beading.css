@@ -35,14 +35,16 @@
    
    
    .dropdown_width{
-    padding-right: 240px;
-    /* width: 240px I !important; */
+    /* width:max-content; */
+    /* padding-right: 16rem; */
+    overflow:auto;
+    width: 25rem !important;
    }
 
 
    @media only screen and (max-width: 600px) {
     .dropdown_width{
-      padding-right: 125px;
+      width: 18rem !important;
      }
   
   }
