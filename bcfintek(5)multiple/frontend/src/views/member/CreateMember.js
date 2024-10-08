@@ -213,7 +213,7 @@ const CreateMember = () => {
 
 
 
-        const response = await dispatch(createMember(formattedValue)).unwrap();
+        const response = await dispatch(createMember(value)).unwrap();
 
         // Show modal with success or error message
         setModalMessage(response.message);

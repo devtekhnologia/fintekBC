@@ -8,8 +8,11 @@ export const updateMember = createAsyncThunk(
   'selectedMember/updateMember',
   async (memberData, { rejectWithValue }) => {
     try {
+
+
+      console.log(memberData)
       const response = await axios.put(`${API_BASE_URL}/memberupdate`, memberData);
-      return response.data; // Assuming the response data includes the updated member data
+      return response.data; 
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

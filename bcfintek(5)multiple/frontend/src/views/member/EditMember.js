@@ -42,17 +42,66 @@ const EditMember = () => {
     }));
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const validationErrors = CreateMemberValidation(value);
+  //   setErrors(validationErrors);
+
+  //   if (Object.keys(validationErrors).length === 0) {
+
+
+
+
+  //     try {
+
+  //       // const formattedValue = {
+  //       //   ...value,
+  //       //   m_mobile: `+91${value.m_mobile}`,
+  //       // };
+  
+
+  //       console.log("object",value)
+  //       const response = await dispatch(updateMember(value));
+  //       setModalMessage(response.message);
+  //       setShowModal(true);
+
+  //       if (response.status === true) {
+  //         // Reset form values after successful submission
+  //         setValue({
+  //           member_id: selectedMemberId,
+  //           m_name: "",
+  //           m_mobile: "",
+  //           m_address: "",
+  //         });
+  //       }
+  //     } catch (error) {
+  //       // Show modal with error message
+  //       setModalMessage("Error updating member: " + error.message);
+  //       setShowModal(true);
+  //     }
+  //   }
+  // };
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = CreateMemberValidation(value);
     setErrors(validationErrors);
-
+  
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await dispatch(updateMember(value));
+        // Format the mobile number to include the country code
+        const formattedValue = {
+          ...value,
+          m_mobile: `+91${value.m_mobile}`, // Add +91 prefix to mobile number
+        };
+  
+        console.log("Submitting:", value.m_mobile); // Log the formatted value for debugging
+        const response = await dispatch(updateMember(formattedValue));
         setModalMessage(response.message);
         setShowModal(true);
-
+  
         if (response.status === true) {
           // Reset form values after successful submission
           setValue({
@@ -69,7 +118,7 @@ const EditMember = () => {
       }
     }
   };
-
+  
   const handleCloseModal = () => {
     setShowModal(false);
     setModalMessage("");
